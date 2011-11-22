@@ -1,0 +1,12 @@
+AJAX forms made easy
+====================
+
+HTML:
+    <form method="post" action="/awesome.php">
+    <!-- ... -->
+    </form>
+
+JS:
+    $('form').ajaxius(function(response) {
+      alert('Awesome!');
+    });
