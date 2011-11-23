@@ -1,10 +1,8 @@
-/**
+/*
  * Ajaxius v0.1.8
- * 
- * Creative Commons-Attribution-Share Alike
- * http://creativecommons.org/licenses/by-sa/3.0
- *
- * by Arthur Corenzan <arthur@corenzan.com>
+ * Author: Arthur Corenzan <arthur@corenzan.com>
+ * License: http://creativecommons.org/licenses/by-sa/3.0
+ * More information: http://github.com/haggen/ajaxius
  */
 (function($) {
   'use strict';
