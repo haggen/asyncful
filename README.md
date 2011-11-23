@@ -30,4 +30,4 @@ You can pass only one function, to act as success callback, receiving the AJAX r
 - `error`: `function`, error event callback, will receive status error code
 - `message`: `function`, error message placement callback, will receive invalid input and error message
 
-* Every parameter fall back to default value if not given.
+Every parameter fall back to default value if not given.
