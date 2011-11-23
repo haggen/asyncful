@@ -1,53 +1,33 @@
 /**
-* Ajaxius v0.1.8
-* jQuery plugin to validate forms, and make them work with AJAX
-* by Arthur Corenzan <arthur@corenzan.com>
-* Creative Commons-Attribution-Share Alike
-* http://creativecommons.org/licenses/by-sa/3.0
-*
-* Usage:
-*
-* <form method="post" action="awesome.php">
-*   ...
-* </form>
-*
-* <script>
-*   $('form').ajaxius(function(response) {
-*     alert(response);
-*   });
-* </script>
-*
-* Options:
-*
-* enabled: boolean, tell whether to use ajax, default is true
-* validations: hash of arrays where key in the input name, and value is an array: pattern, message[, sanitize]
-* success: function, success callback function, will receive ajax response as only argument
-* error: function, error event callback, will receive status error code
-* message: function, error message placement callback, will receive invalid input and error message
-*/
+ * Ajaxius v0.1.8
+ * 
+ * Creative Commons-Attribution-Share Alike
+ * http://creativecommons.org/licenses/by-sa/3.0
+ *
+ * by Arthur Corenzan <arthur@corenzan.com>
+ */
 (function($) {
   'use strict';
 
   $.fn.ajaxius = function(options) {
 
-    //accept one singular argument as success callback
     if(typeof(options) === 'function') {
       options = {success: options}; 
     }
 
-    //or a hash of options
+    //default values for options
     options = $.extend({
 
       //set false to skip ajax
       enabled: true,
 
-      //success callback
+      //success callback, default does nothing
       success: $.noop,
 
-      //error callback
+      //error callback, default does nothing
       error: $.noop,
 
-      //hash for validation
+      //hash of validation rules
       validations: null,
 
       //error message placement callback
@@ -57,15 +37,13 @@
 
     }, options); 
 
-    //validate given form and build error collection
+    //validate target form and collect error messages
     var validate = function($form) {
 
-      //error messages collection
-      var errors = {}, 
-
+      var errors = {},
       i, rule, value, $element;
 
-      //build validations from HTML if null is given
+      //build validations from HTML if null was given
       if(options.validations === null) {
         options.validations = {};
         
@@ -85,13 +63,13 @@
 
           rule = options.validations[i];
 
-          //retrive invalid input by name
+          //retrieve invalid input by name
           $element = $form.find('*[name="' + i + '"]');
 
-          //set input value
+          //retrieve input value
           value = $element.val();
 
-          //optional pre sanitization
+          //pre sanitization
           if(2 in rule && rule[2] && rule[2].exec) {
             value = value.replace(rule[2], '');
           }
@@ -159,12 +137,13 @@
               $submit.removeAttr('disabled');
             }
           });
+
+        //simply submit the form if ajax is disabled
         } else {
-
-          //simply submit the form if ajax is disabled
           $form.submit();
-
         }
+
+      //if errors were found
       } else {
         for(i in errors) {
           if(errors.hasOwnProperty(i)) {
@@ -179,9 +158,11 @@
       }
     };
 
+    //keep chained
     return this.each(function() {
+
+      //bind named event
       $(this).bind('submit.ajaxius', ajaxius); 
     });
   };
 })(jQuery);
-
