@@ -7,10 +7,10 @@ Licensed under http://creativecommons.org/licenses/by/3.0/
 
 Usage:
 
-    <form ... data-sync></form>
+    <form ... data-async></form>
 
 or
 
     $('form').asyncful({ ... })
 
-Look at $.ajax docs for possible settings: http://api.jquery.com/jQuery.ajax/
+Look at $.ajax docs for **possible options**: http://api.jquery.com/jQuery.ajax/
