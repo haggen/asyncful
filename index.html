@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Asyncful by haggen</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Asyncful</h1>
+        <p>jQuery plugin to make AJAX capable forms</p>
+        <p class="view"><a href="https://github.com/haggen/asyncful">View the Project on GitHub <small>haggen/asyncful</small></a></p>
+        <ul>
+          <li><a href="https://github.com/haggen/asyncful/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/haggen/asyncful/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/haggen/asyncful">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Asyncful</h1>
+
+<p>Make AJAX capable forms with ease.</p>
+
+<h2>Features</h2>
+
+<p>Asyncful does one thing and does it well. It works with <code>multipart</code> forms (for uploading files) and supports even IE6. Asyncful is lightweight and easy to use. Take a look.</p>
+
+<h2>Usage</h2>
+
+<pre><code>&lt;form method="post" action="/submit"&gt;&lt;/form&gt;
+
+$('form').asyncful({ ... });
+</code></pre>
+
+<p>Options are plain AJAX jQuery settings, see the docs: <a href="http://api.jquery.com/jQuery.ajax/">http://api.jquery.com/jQuery.ajax/</a></p>
+
+<p>But wait, you don't really have to set any options because Asyncful will use values set for <code>action</code> and <code>method</code> automagically. Also, it will assume that the response is a script and will evaluate it, so you don't have to worry with callbacks.</p>
+
+<p>Just one thing; if your form has <code>enctype</code> attribute set to <code>multipart/form-data</code> it will <strong>NOT</strong> use AJAX settings, since it will rely on the old trick of using an <code>&lt;iframe&gt;</code> to submit the data (for compatibility).</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/haggen">haggen</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
