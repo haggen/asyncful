@@ -7,28 +7,28 @@
 (function($) {
   $.fn.asyncful = function(options) {
     return this.on('submit', function(e) {
-      var self, iframe, uid;
+      var self, enctype, frame, frameName;
 
       self = $(this);
+      enctype = self.attr('enctype') || '';
 
-      if(self.attr('enctype').toLowerCase() === 'multipart/form-data') {
-        iframe = $('<iframe></iframe>');
+      if(enctype.toLowerCase() === 'multipart/form-data') {
+        frame = $('<iframe></iframe>');
 
-        uid = Math.random().toString(36).slice(2);
+        frameName = 'frame-' + Math.random().toString(36).slice(2);
 
-        iframe.attr('name', 'frame' + uid);
-        iframe.attr('style', 'width:0;height:0;margin:0;border:0;padding:0');
+        frame
+          .attr('name', frameName)
+          .attr('style', 'width:0;height:0;margin:0;border:0;padding:0;float:left')
+          .on('load', function() {
+            try {
+              eval($(this).contents().find('body').text());
+            } catch(e) {}
+          });
 
-        iframe.on('load', function() {
-          try {
-            eval(this['document'] !== undefined ?
-              this.document.body.innerHTML : this.contentDocument.body.innerHTML);
-          } catch(e) {}
-        });
+        self.before(frame);
 
-        self.before(iframe);
-
-        self.attr('target', 'frame' + uid)
+        self.attr('target', frameName)
       } else {
         options = $.extend(options, {
           url: this.action, 
@@ -40,6 +40,8 @@
 
         e.preventDefault();
         $.ajax(options);
+
+        return false;
       }
     });
   };
