@@ -1,33 +1,46 @@
 /*
- * Asyncful v1.0
+ * Asyncful v0.6 2012-06-11 01:36:10 -0300
  * by Arthur Corenzan <arthur@corenzan.com>
- * license under http://creativecommons.org/licenses/by-sa/3.0
+ * licensed under http://creativecommons.org/licenses/by-sa/3.0
  * more on http://github.com/haggen/asyncful
  */
 (function($) {
-  $.fn.asyncful = function(settings) {
+  $.fn.asyncful = function(options) {
+    return this.on('submit', function(e) {
+      var self, iframe, uid;
 
-    //let it chainable
-    return this.each(function() {
+      self = $(this);
 
-      //replace regular submit with ajax
-      $(this).bind('submit', function(e) {
-        e.preventDefault();
+      if(self.attr('enctype').toLowerCase() === 'multipart/form-data') {
+        iframe = $('<iframe></iframe>');
 
-        settings = $.extend(settings, {
-          url: this.action, 
-          type: this.method, 
-          data: $(this).serialize(),
-          context: this,
+        uid = Math.random().toString(36).slice(2);
+
+        iframe.attr('name', 'frame' + uid);
+        iframe.attr('style', 'width:0;height:0;margin:0;border:0;padding:0');
+
+        iframe.on('load', function() {
+          try {
+            eval(this['document'] !== undefined ?
+              this.document.body.innerHTML : this.contentDocument.body.innerHTML);
+          } catch(e) {}
         });
 
-        $.ajax(settings);
-      });
+        self.before(iframe);
+
+        self.attr('target', 'frame' + uid)
+      } else {
+        options = $.extend(options, {
+          url: this.action, 
+          type: this.method, 
+          dataType: 'script',
+          data: $(this).serialize(),
+          context: this
+        });
+
+        e.preventDefault();
+        $.ajax(options);
+      }
     });
   };
-
-  //enable AJAX for <form> with data-async attribute
-  $(function() {
-    $('form[data-async]').asyncful();
-  });
 })(jQuery);
