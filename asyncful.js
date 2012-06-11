@@ -13,7 +13,9 @@
 
       // Form's native submit method does not trigger the event,
       // so let's replace it with another that does
-      this.submit = self.submit;
+      this.submit = function() {
+        self.submit();
+      }
 
       self.on('submit', function(e) {
         var enctype, frame, frameName;
