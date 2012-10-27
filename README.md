@@ -4,7 +4,7 @@ Make AJAX capable forms with ease.
 
 ## Features
 
-Asyncful does one thing and does it well. It works with `multipart` forms (for uploading files) and supports even IE6. Asyncful is lightweight and easy to use. Take a look.
+Asyncful does one thing and does it well. It even works with `multipart` forms (for uploading files) that supports IE6. Asyncful is lightweight and easy to use. Take a look.
 
 ## Usage
 
@@ -14,6 +14,6 @@ Asyncful does one thing and does it well. It works with `multipart` forms (for u
 
 Options are plain AJAX jQuery settings, see the docs: http://api.jquery.com/jQuery.ajax/
 
-But wait, you don't really have to set any options because Asyncful will use values set for `action` and `method` automagically. Also, it will assume that the response is a script and will evaluate it, so you don't have to worry with callbacks.
+But you don't really have to set any option because Asyncful will, automagically, guess those from form attributes. Plus, it will assume that the response is javascript and will evaluate it, so you don't have to worry with callbacks. Of course you can disable this feature by overwriting the `dataType` options and providing a callback.
 
-Just one thing; if your form has `enctype` attribute set to `multipart/form-data` it will **NOT** use AJAX settings, since it will rely on the old trick of using an `<iframe>` to submit the data (for compatibility).
+Beware that if your form has `enctype` set to `multipart/form-data` (as for uploading files) it will **NOT** use AJAX settings, since it will rely on the old trick of using an `<iframe>` to submit the data (for compatibility purposes). Once again it will assume that the response is javascript and you can disable it but simply providing a `complete` callback in options.
