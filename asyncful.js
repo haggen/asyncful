@@ -7,20 +7,20 @@
 (function($) {
   $.fn.asyncful = function(options) {
     return this.each(function() {
-      var self;
+      var form;
 
-      self = $(this);
+      form = $(this);
 
-      // Form's native submit method does not trigger the event,
-      // so let's replace it with another that does
+      // Form's native method does not trigger submit event,
+      // so let's replace it with another one that does.
       this.submit = function() {
-        self.submit();
-      }
+        form.submit();
+      };
 
-      self.on('submit', function(e) {
+      form.on('submit', function(e) {
         var enctype, frame, frameName;
 
-        enctype = self.attr('enctype') || '';
+        enctype = form.attr('enctype') || '';
 
         if(enctype.toLowerCase() === 'multipart/form-data') {
           frame = $('<iframe></iframe>');
@@ -31,18 +31,24 @@
             .attr('name', frameName)
             .attr('style', 'width:0;height:0;margin:0;border:0;padding:0;float:left')
             .on('load', function() {
-              try {
-                eval($(this).contents().find('body').text());
-              } catch(e) {}
+              var contents = $(this).contents().find('body').text();
+
+              if(options && options.complete) {
+                options.complete.apply(form[0], [contents]);
+              } else {
+                try {
+                  eval(contents);
+                } catch(e) {}
+              }
             });
 
-          self.before(frame);
-
-          self.attr('target', frameName)
+          form
+            .before(frame)
+            .attr('target', frameName);
         } else {
           options = $.extend(options, {
-            url: this.action, 
-            type: this.method, 
+            url: this.action,
+            type: this.method,
             dataType: 'script',
             data: $(this).serialize(),
             context: this
@@ -56,4 +62,4 @@
       });
     });
   };
-})(jQuery);
+})(window.jQuery);
